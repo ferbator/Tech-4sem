@@ -19,8 +19,7 @@ public class ConsoleInterface {
         Bank bank = null;
         Transaction transaction = null;
         String b = null;
-        while (b != "Q")
-        {
+        while (b != "Q") {
             System.out.println("1 - Start Create Bank");
             System.out.println("2 - Start Create Client");
             System.out.println("3 - Start Create Account");
@@ -30,10 +29,8 @@ public class ConsoleInterface {
             Scanner in = new Scanner(System.in);
             b = in.nextLine();
 
-            switch (b)
-            {
-                case "1":
-                {
+            switch (b) {
+                case "1": {
                     System.out.println("Set Name\nExample: string");
                     String name = in.nextLine();
                     System.out.println("Set limitForNotVerification\nExample: double");
@@ -44,8 +41,7 @@ public class ConsoleInterface {
                     double commissionUsingForCreditAccounts = in.nextDouble();
                     System.out.println("Set percentageOnBalanceForDepositAccounts\nExample: 50000 3\nExample: 100000 5\nExample:1000000 6");
                     DepositAccountPercentage percentageOnBalanceForDepositAccounts = new DepositAccountPercentage();
-                    for (int i = 0; i < 3; i++)
-                    {
+                    for (int i = 0; i < 3; i++) {
                         Scanner in2 = new Scanner(System.in);
                         String str = in2.nextLine();
                         double first = Double.parseDouble(str.split(" ")[0]);
@@ -70,10 +66,8 @@ public class ConsoleInterface {
                     System.out.println("1 - Start Create Client");
                     System.out.println("2 - Start Create Verification Client");
                     b = in.nextLine();
-                    switch (b)
-                    {
-                        case "1":
-                        {
+                    switch (b) {
+                        case "1": {
                             System.out.println("Set name\nExample: string");
                             String name = in.nextLine();
                             System.out.println("Set surname\nExample: string");
@@ -83,8 +77,7 @@ public class ConsoleInterface {
                             break;
                         }
 
-                        case "2":
-                        {
+                        case "2": {
                             System.out.println("Set name\nExample: string");
                             String name = in.nextLine();
                             System.out.println("Set surname\nExample: string");
@@ -105,8 +98,7 @@ public class ConsoleInterface {
                     System.out.println("2 - Start Create Credit");
                     System.out.println("3 - Start Create Deposit");
                     b = in.nextLine();
-                    switch (b)
-                    {
+                    switch (b) {
                         case "1":
                             account1 = centralBank.regAccountClientInBank(bank, client, AccountOption.Debit, 10000);
                             account2 = centralBank.regAccountClientInBank(bank, client, AccountOption.Debit, 10000);
@@ -132,8 +124,7 @@ public class ConsoleInterface {
                     System.out.println("2 - Do Withdrawal Money Transaction");
                     System.out.println("3 - Do Transfer Money Transaction");
                     b = in.nextLine();
-                    switch (b)
-                    {
+                    switch (b) {
                         case "1":
                             transaction = centralBank.replenishmentMoney(account1, amount);
                             System.out.println("Done");

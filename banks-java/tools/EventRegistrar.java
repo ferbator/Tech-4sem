@@ -3,7 +3,6 @@ package tools;
 import clientServices.Client;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 
 public class EventRegistrar {

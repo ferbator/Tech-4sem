@@ -102,12 +102,17 @@ public class Bank {
             baseBank.get(client).add(account);
         else
             baseBank.put(client, new ArrayList<IAccount>(List.of(account)));
-        client.CreateAccount(this, getInfoAccounts(client));
+        client.createAccount(this, getInfoAccounts(client));
     }
 
     public IAccount findAccount(String numberId) throws CentralBankException {
         if (numberId == null) throw new CentralBankException("Incorrect numberId");
-        return baseBank.values().stream().flatMap(Collection::stream).filter(i -> Objects.equals(i.getIdAccount(), numberId)).findFirst().orElse(null);
+        return baseBank.values()
+                .stream()
+                .flatMap(Collection::stream)
+                .filter(i -> Objects.equals(i.getIdAccount(), numberId))
+                .findFirst()
+                .orElse(null);
     }
 
     public void accruePercentage() {

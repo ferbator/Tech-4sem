@@ -13,9 +13,14 @@ public class CreditAccount implements IAccount {
     private String numberOfAccount;
     private boolean verification;
     public Bank belongBank;
+
     public CreditAccount(Client user, Bank bank, double amount) throws CentralBankException {
-        if (bank == null) throw new CentralBankException("null bank");
-        if (user == null) throw new CentralBankException("null client");
+        if (bank == null) {
+            throw new CentralBankException("null bank");
+        }
+        if (user == null) {
+            throw new CentralBankException("null client");
+        }
         verification = user.getVerification();
         commissionUsing = bank.getCommissionUsingForCreditAccounts();
         creditLimit = bank.getCreditLimitForCreditAccounts();
@@ -24,43 +29,36 @@ public class CreditAccount implements IAccount {
         numberOfAccount = UUID.randomUUID().toString();
     }
 
-    public void withdrawalMoney(double amount)
-    {
-        if (balance - amount > -creditLimit)
+    public void withdrawalMoney(double amount) {
+        if (balance - amount > -creditLimit) {
             balance -= amount;
+        }
     }
 
-    public void replenishmentMoney(double amount)
-    {
+    public void replenishmentMoney(double amount) {
         balance += amount;
     }
 
-    public void transferMoney(IAccount account, double amount)
-    {
+    public void transferMoney(IAccount account, double amount) {
         withdrawalMoney(amount);
         account.replenishmentMoney(amount);
     }
 
-    public void actionWithAccount()
-    {
-        if (balance < 0 && balance - commissionUsing >= -creditLimit)
-        {
+    public void actionWithAccount() {
+        if ((balance < 0) && (balance - commissionUsing >= -creditLimit)) {
             balance -= commissionUsing;
         }
     }
 
-    public String getIdAccount()
-    {
+    public String getIdAccount() {
         return numberOfAccount;
     }
 
-    public boolean checkVerification()
-    {
+    public boolean checkVerification() {
         return verification;
     }
 
-    public Bank getBelongBank()
-    {
+    public Bank getBelongBank() {
         return belongBank;
     }
 }

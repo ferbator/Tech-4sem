@@ -20,9 +20,13 @@ public class Client {
 
     public Client(String name, String surname, String address, String passport) throws CentralBankException {
         this.id = UUID.randomUUID();
-        if (name.isBlank()) throw new CentralBankException("Incorrect name");
+        if (name.isBlank()) {
+            throw new CentralBankException("Incorrect name");
+        }
         this.name = name;
-        if (surname.isBlank()) throw new CentralBankException("Incorrect surname");
+        if (surname.isBlank()) {
+            throw new CentralBankException("Incorrect surname");
+        }
         this.surname = surname;
         this.address = address;
         this.passport = passport;
@@ -31,7 +35,7 @@ public class Client {
     }
 
     public static void update(String other) {
-        System.out.printf(other);
+        System.out.print(other);
     }
 
     public static ClientBuilder Builder(String name, String surname) throws CentralBankException {
@@ -43,7 +47,7 @@ public class Client {
     }
 
 
-    public void CreateAccount(Bank bank, ArrayList<IAccount> accounts) {
+    public void createAccount(Bank bank, ArrayList<IAccount> accounts) {
         if (!clientCollectionAccounts.containsKey(bank))
             clientCollectionAccounts.put(bank, accounts);
         else {

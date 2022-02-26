@@ -14,6 +14,7 @@ public class Transaction {
     public String getWithdrawalAccount() {
         return withdrawalAccount;
     }
+
     public void setWithdrawalAccount(String value) {
         this.withdrawalAccount = value;
     }
@@ -21,6 +22,7 @@ public class Transaction {
     public String getTransferAccount() {
         return transferAccount;
     }
+
     public void setTransferAccount(String value) {
         this.transferAccount = value;
     }
@@ -28,6 +30,7 @@ public class Transaction {
     public double getAmount() {
         return amount;
     }
+
     public void setAmount(double value) {
         this.amount = value;
     }
