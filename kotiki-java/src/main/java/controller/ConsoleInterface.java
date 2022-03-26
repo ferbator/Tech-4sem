@@ -5,15 +5,14 @@ import dao.daoImpl.FriendshipCatsDAO;
 import dao.daoImpl.OwnersDAO;
 import dao.daoImpl.OwnershipCatsDAO;
 import dao.daoInterface.DAO;
-import dao.entities.Cats;
-import dao.entities.FriendshipCats;
+import dao.entities.Cat;
+import dao.entities.FriendshipCat;
 import dao.entities.Owners;
-import dao.entities.OwnershipCats;
+import dao.entities.OwnershipCat;
 import dao.enums.Colors;
 import services.ShelterService;
 import services.tools.ShelterServiceException;
 
-import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -22,9 +21,9 @@ public class ConsoleInterface {
 
     public ConsoleInterface() {
         DAO<Owners> daoOwn = new OwnersDAO();
-        DAO<Cats> daoCat = new CatsDAO();
-        DAO<OwnershipCats> daoOwnShip = new OwnershipCatsDAO();
-        DAO<FriendshipCats> daoFriendShip = new FriendshipCatsDAO();
+        DAO<Cat> daoCat = new CatsDAO();
+        DAO<OwnershipCat> daoOwnShip = new OwnershipCatsDAO();
+        DAO<FriendshipCat> daoFriendShip = new FriendshipCatsDAO();
         this.service = new ShelterService(daoOwn, daoCat, daoOwnShip, daoFriendShip);
     }
 

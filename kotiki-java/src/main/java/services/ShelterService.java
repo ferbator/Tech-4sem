@@ -1,10 +1,10 @@
 package services;
 
 import dao.daoInterface.DAO;
-import dao.entities.Cats;
-import dao.entities.FriendshipCats;
+import dao.entities.Cat;
+import dao.entities.FriendshipCat;
 import dao.entities.Owners;
-import dao.entities.OwnershipCats;
+import dao.entities.OwnershipCat;
 import dao.enums.Colors;
 import dao.tools.DAOException;
 import services.tools.ShelterServiceException;
@@ -15,11 +15,11 @@ import java.util.List;
 
 public class ShelterService {
     private DAO<Owners> daoOwn;
-    private DAO<Cats> daoCat;
-    private DAO<OwnershipCats> daoOwnShip;
-    private DAO<FriendshipCats> daoFriendShip;
+    private DAO<Cat> daoCat;
+    private DAO<OwnershipCat> daoOwnShip;
+    private DAO<FriendshipCat> daoFriendShip;
 
-    public ShelterService(DAO<Owners> daoOwn, DAO<Cats> daoCat, DAO<OwnershipCats> daoOwnShip, DAO<FriendshipCats> daoFriendShip) {
+    public ShelterService(DAO<Owners> daoOwn, DAO<Cat> daoCat, DAO<OwnershipCat> daoOwnShip, DAO<FriendshipCat> daoFriendShip) {
         this.daoOwn = daoOwn;
         this.daoCat = daoCat;
         this.daoOwnShip = daoOwnShip;
@@ -38,7 +38,7 @@ public class ShelterService {
     }
 
     public boolean addCatToBase(String name, Colors color, String breed, String birthday) throws ShelterServiceException {
-        Cats cat = new Cats();
+        Cat cat = new Cat();
         cat.setName(name);
         cat.setColor(color);
         cat.setBirthday(Timestamp.valueOf(birthday));
@@ -51,13 +51,13 @@ public class ShelterService {
     }
 
     public boolean delOwnerFromBase(long idOwn) throws ShelterServiceException {
-        List<OwnershipCats> tmpOwnershipCats = null;
+        List<OwnershipCat> tmpOwnershipCats = null;
         try {
             tmpOwnershipCats = daoOwnShip.findAll();
         } catch (DAOException e) {
             throw new ShelterServiceException("Error when findAll", e);
         }
-        for (OwnershipCats ship : tmpOwnershipCats) {
+        for (OwnershipCat ship : tmpOwnershipCats) {
             if (ship.getOwnerId() == idOwn)
                 try {
                     return daoOwnShip.del(ship);
@@ -73,13 +73,13 @@ public class ShelterService {
     }
 
     public boolean delCatFromBase(long idCat) throws ShelterServiceException {
-        List<OwnershipCats> tmpOwnershipCats = null;
+        List<OwnershipCat> tmpOwnershipCats = null;
         try {
             tmpOwnershipCats = daoOwnShip.findAll();
         } catch (DAOException e) {
             throw new ShelterServiceException("Error when findAll", e);
         }
-        for (OwnershipCats ship : tmpOwnershipCats) {
+        for (OwnershipCat ship : tmpOwnershipCats) {
             if (ship.getCatId() == idCat)
                 try {
                     return daoOwnShip.del(ship);
@@ -87,13 +87,13 @@ public class ShelterService {
                     throw new ShelterServiceException("Error when delete", e);
                 }
         }
-        List<FriendshipCats> tmpFriendshipCats = null;
+        List<FriendshipCat> tmpFriendshipCats = null;
         try {
             tmpFriendshipCats = daoFriendShip.findAll();
         } catch (DAOException e) {
             throw new ShelterServiceException("Error when findAll", e);
         }
-        for (FriendshipCats ship : tmpFriendshipCats) {
+        for (FriendshipCat ship : tmpFriendshipCats) {
             if (ship.getFirstCatId() == idCat || ship.getSecondCatId() == idCat)
                 try {
                     return daoFriendShip.del(ship);
@@ -109,7 +109,7 @@ public class ShelterService {
     }
 
     public boolean startСatOwnership(long idOwner, long idCat) throws ShelterServiceException {
-        OwnershipCats ship = new OwnershipCats();
+        OwnershipCat ship = new OwnershipCat();
         ship.setOwnerId(idOwner);
         ship.setCatId(idCat);
         try {
@@ -120,13 +120,13 @@ public class ShelterService {
     }
 
     public boolean cancelCatOwnership(long idOwner, long idCat) throws ShelterServiceException {
-        List<OwnershipCats> tmpOwnershipCats = null;
+        List<OwnershipCat> tmpOwnershipCats = null;
         try {
             tmpOwnershipCats = daoOwnShip.findAll();
         } catch (DAOException e) {
             throw new ShelterServiceException("Error when findAll", e);
         }
-        for (OwnershipCats ship : tmpOwnershipCats) {
+        for (OwnershipCat ship : tmpOwnershipCats) {
             if (ship.getOwnerId() == idOwner && ship.getCatId() == idCat)
                 try {
                     return daoOwnShip.del(ship);
@@ -138,7 +138,7 @@ public class ShelterService {
     }
 
     public boolean startСatFriendship(long idFirstCat, long idSecondCat) throws ShelterServiceException {
-        FriendshipCats ship = new FriendshipCats();
+        FriendshipCat ship = new FriendshipCat();
         ship.setFirstCatId(idFirstCat);
         ship.setSecondCatId(idSecondCat);
         try {
@@ -149,13 +149,13 @@ public class ShelterService {
     }
 
     public boolean cancelCatFriendship(long idFirstCat, long idSecondCat) throws ShelterServiceException {
-        List<FriendshipCats> tmpFriendshipCats = null;
+        List<FriendshipCat> tmpFriendshipCats = null;
         try {
             tmpFriendshipCats = daoFriendShip.findAll();
         } catch (DAOException e) {
             throw new ShelterServiceException("Error when findAll", e);
         }
-        for (FriendshipCats ship : tmpFriendshipCats) {
+        for (FriendshipCat ship : tmpFriendshipCats) {
             if (ship.getFirstCatId() == idFirstCat && ship.getSecondCatId() == idSecondCat)
                 try {
                     return daoFriendShip.del(ship);
@@ -166,15 +166,15 @@ public class ShelterService {
         return false;
     }
 
-    public List<Cats> getListFriendsForCat(long id) throws ShelterServiceException {
-        List<FriendshipCats> tmpFriendshipCats = null;
+    public List<Cat> getListFriendsForCat(long id) throws ShelterServiceException {
+        List<FriendshipCat> tmpFriendshipCats = null;
         try {
             tmpFriendshipCats = daoFriendShip.findAll();
         } catch (DAOException e) {
             throw new ShelterServiceException("Error when findAll", e);
         }
-        List<Cats> tmpFriendsForCat = new ArrayList<>();
-        for (FriendshipCats ship : tmpFriendshipCats) {
+        List<Cat> tmpFriendsForCat = new ArrayList<>();
+        for (FriendshipCat ship : tmpFriendshipCats) {
             if (ship.getFirstCatId() == id)
                 try {
                     tmpFriendsForCat.add(daoCat.getById(ship.getSecondCatId()));
@@ -193,22 +193,22 @@ public class ShelterService {
         return tmpFriendsForCat;
     }
 
-    public List<Cats> getListCatsForOwner(long id) throws ShelterServiceException {
-        List<OwnershipCats> tmpOwnershipCats = null;
+    public List<Cat> getListCatsForOwner(long id) throws ShelterServiceException {
+        List<OwnershipCat> tmpOwnershipCats = null;
         try {
             tmpOwnershipCats = daoOwnShip.findAll();
         } catch (dao.tools.DAOException e) {
             throw new ShelterServiceException("Error when findAll", e);
         }
-        List<Cats> tmpCatsForOwner = new ArrayList<>();
-        for (OwnershipCats ship : tmpOwnershipCats) {
+        List<Cat> tmpCatForOwner = new ArrayList<>();
+        for (OwnershipCat ship : tmpOwnershipCats) {
             if (ship.getOwnerId() == id)
                 try {
-                    tmpCatsForOwner.add(daoCat.getById(ship.getCatId()));
+                    tmpCatForOwner.add(daoCat.getById(ship.getCatId()));
                 } catch (dao.tools.DAOException e) {
                     throw new ShelterServiceException("Error when adding", e);
                 }
         }
-        return tmpCatsForOwner;
+        return tmpCatForOwner;
     }
 }

@@ -1,7 +1,7 @@
 package dao.daoImpl;
 
 import dao.daoInterface.DAO;
-import dao.entities.FriendshipCats;
+import dao.entities.FriendshipCat;
 import dao.tools.DAOException;
 import dao.tools.HibernateUtil;
 import org.hibernate.HibernateException;
@@ -9,14 +9,14 @@ import org.hibernate.Session;
 
 import java.util.List;
 
-public class FriendshipCatsDAO implements DAO<FriendshipCats> {
+public class FriendshipCatsDAO implements DAO<FriendshipCat> {
     @Override
-    public List<FriendshipCats> findAll() throws DAOException {
+    public List<FriendshipCat> findAll() throws DAOException {
         try {
-            List<FriendshipCats> objects;
+            List<FriendshipCat> objects;
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.getTransaction().begin();
-            objects = session.createQuery("select e from FriendshipCats e order by e.id", FriendshipCats.class)
+            objects = session.createQuery("select e from FriendshipCat e order by e.id", FriendshipCat.class)
                     .getResultList();
             session.getTransaction().commit();
             session.close();
@@ -28,7 +28,7 @@ public class FriendshipCatsDAO implements DAO<FriendshipCats> {
     }
 
     @Override
-    public boolean refract(FriendshipCats object) throws DAOException {
+    public boolean refract(FriendshipCat object) throws DAOException {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.getTransaction().begin();
@@ -43,7 +43,7 @@ public class FriendshipCatsDAO implements DAO<FriendshipCats> {
     }
 
     @Override
-    public boolean add(FriendshipCats object) throws DAOException {
+    public boolean add(FriendshipCat object) throws DAOException {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.getTransaction().begin();
@@ -58,7 +58,7 @@ public class FriendshipCatsDAO implements DAO<FriendshipCats> {
     }
 
     @Override
-    public boolean del(FriendshipCats object) throws DAOException {
+    public boolean del(FriendshipCat object) throws DAOException {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.getTransaction().begin();
@@ -73,10 +73,10 @@ public class FriendshipCatsDAO implements DAO<FriendshipCats> {
     }
 
     @Override
-    public FriendshipCats getById(long id) throws DAOException {
+    public FriendshipCat getById(long id) throws DAOException {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
-            FriendshipCats item = session.byId(FriendshipCats.class).load(id);
+            FriendshipCat item = session.byId(FriendshipCat.class).load(id);
             session.close();
 
             return item;

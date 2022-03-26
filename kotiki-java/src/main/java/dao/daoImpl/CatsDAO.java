@@ -1,7 +1,7 @@
 package dao.daoImpl;
 
 import dao.daoInterface.DAO;
-import dao.entities.Cats;
+import dao.entities.Cat;
 import dao.tools.DAOException;
 import dao.tools.HibernateUtil;
 import org.hibernate.HibernateException;
@@ -9,14 +9,14 @@ import org.hibernate.Session;
 
 import java.util.List;
 
-public class CatsDAO implements DAO<Cats> {
+public class CatsDAO implements DAO<Cat> {
     @Override
-    public List<Cats> findAll() throws DAOException {
+    public List<Cat> findAll() throws DAOException {
         try {
-            List<Cats> objects;
+            List<Cat> objects;
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.getTransaction().begin();
-            objects = session.createQuery("select e from Cats e order by e.id", Cats.class)
+            objects = session.createQuery("select e from Cat e order by e.id", Cat.class)
                     .getResultList();
             session.getTransaction().commit();
             session.close();
@@ -28,7 +28,7 @@ public class CatsDAO implements DAO<Cats> {
     }
 
     @Override
-    public boolean refract(Cats object) throws DAOException {
+    public boolean refract(Cat object) throws DAOException {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.getTransaction().begin();
@@ -43,7 +43,7 @@ public class CatsDAO implements DAO<Cats> {
     }
 
     @Override
-    public boolean add(Cats object) throws DAOException {
+    public boolean add(Cat object) throws DAOException {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.getTransaction().begin();
@@ -58,7 +58,7 @@ public class CatsDAO implements DAO<Cats> {
     }
 
     @Override
-    public boolean del(Cats object) throws DAOException {
+    public boolean del(Cat object) throws DAOException {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.getTransaction().begin();
@@ -73,10 +73,10 @@ public class CatsDAO implements DAO<Cats> {
     }
 
     @Override
-    public Cats getById(long id) throws DAOException {
+    public Cat getById(long id) throws DAOException {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
-            Cats item = session.byId(Cats.class).load(id);
+            Cat item = session.byId(Cat.class).load(id);
             session.close();
 
             return item;

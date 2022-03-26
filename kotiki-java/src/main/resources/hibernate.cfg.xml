@@ -12,9 +12,9 @@
     <property name="hbm2ddl.auto">update</property>
     <property name="connection.username">postgres</property>
     <property name="connection.password">7878</property>
-    <mapping class="dao.entities.Cats"/>
-    <mapping class="dao.entities.FriendshipCats"/>
+    <mapping class="dao.entities.Cat"/>
+    <mapping class="dao.entities.FriendshipCat"/>
     <mapping class="dao.entities.Owners"/>
-    <mapping class="dao.entities.OwnershipCats"/>
+    <mapping class="dao.entities.OwnershipCat"/>
   </session-factory>
 </hibernate-configuration>

@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
+@Table(name = "owners")
 public class Owners {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

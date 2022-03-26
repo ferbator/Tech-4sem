@@ -1,9 +1,9 @@
 package services;
 import dao.daoInterface.DAO;
-import dao.entities.Cats;
-import dao.entities.FriendshipCats;
+import dao.entities.Cat;
+import dao.entities.FriendshipCat;
 import dao.entities.Owners;
-import dao.entities.OwnershipCats;
+import dao.entities.OwnershipCat;
 import dao.enums.Colors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,18 +22,18 @@ class ShelterServiceTest {
     @Mock
     private DAO<Owners> daoOwn;
     @Mock
-    private DAO<Cats> daoCat;
+    private DAO<Cat> daoCat;
     @Mock
-    private DAO<OwnershipCats> daoOwnShip;
+    private DAO<OwnershipCat> daoOwnShip;
     @Mock
-    private DAO<FriendshipCats> daoFriendShip;
+    private DAO<FriendshipCat> daoFriendShip;
 
     private Owners own;
-    private Cats cat1;
-    private Cats cat2;
-    private OwnershipCats ownAndCat1;
-    private OwnershipCats ownAndCat2;
-    private FriendshipCats cat1AndCat2;
+    private Cat cat1;
+    private Cat cat2;
+    private OwnershipCat ownAndCat1;
+    private OwnershipCat ownAndCat2;
+    private FriendshipCat cat1AndCat2;
 
     private ShelterService service;
 
@@ -43,27 +43,27 @@ class ShelterServiceTest {
         own.setName("sock");
         own.setBirthday(Timestamp.valueOf("2002-01-12 00:00:00"));
 
-        cat1 = new Cats();
+        cat1 = new Cat();
         cat1.setName("Boris");
         cat1.setColor(Colors.Black);
         cat1.setBirthday(Timestamp.valueOf("2002-01-12 00:00:00"));
         cat1.setBreed("breed");
 
-        cat2 = new Cats();
+        cat2 = new Cat();
         cat2.setName("Stepan");
         cat2.setColor(Colors.Orange);
         cat2.setBirthday(Timestamp.valueOf("2002-01-12 00:00:00"));
         cat2.setBreed("breed");
 
-        ownAndCat1 = new OwnershipCats();
+        ownAndCat1 = new OwnershipCat();
         ownAndCat1.setOwnerId(1);
         ownAndCat1.setCatId(1);
 
-        ownAndCat2 = new OwnershipCats();
+        ownAndCat2 = new OwnershipCat();
         ownAndCat2.setOwnerId(1);
         ownAndCat2.setCatId(2);
 
-        cat1AndCat2 = new FriendshipCats();
+        cat1AndCat2 = new FriendshipCat();
         cat1AndCat2.setFirstCatId(1);
         cat1AndCat2.setSecondCatId(2);
 
@@ -103,7 +103,7 @@ class ShelterServiceTest {
         } catch (dao.tools.DAOException e) {
             e.printStackTrace();
         }
-        List<OwnershipCats> ownershipCats = new ArrayList<>();
+        List<OwnershipCat> ownershipCats = new ArrayList<>();
         ownershipCats.add(ownAndCat1);
         try {
             when(daoOwnShip.findAll()).thenReturn(ownershipCats);
@@ -131,7 +131,7 @@ class ShelterServiceTest {
         } catch (dao.tools.DAOException e) {
             e.printStackTrace();
         }
-        List<OwnershipCats> ownershipCats = new ArrayList<>();
+        List<OwnershipCat> ownershipCats = new ArrayList<>();
         ownershipCats.add(ownAndCat1);
         try {
             when(daoOwnShip.findAll()).thenReturn(ownershipCats);
@@ -148,7 +148,7 @@ class ShelterServiceTest {
         } catch (dao.tools.DAOException e) {
             e.printStackTrace();
         }
-        List<FriendshipCats> friendshipCats = new ArrayList<>();
+        List<FriendshipCat> friendshipCats = new ArrayList<>();
         friendshipCats.add(cat1AndCat2);
         try {
             when(daoFriendShip.findAll()).thenReturn(friendshipCats);
@@ -177,7 +177,7 @@ class ShelterServiceTest {
         } catch (dao.tools.DAOException e) {
             e.printStackTrace();
         }
-        List<OwnershipCats> ownershipCats = new ArrayList<>();
+        List<OwnershipCat> ownershipCats = new ArrayList<>();
         ownershipCats.add(ownAndCat1);
         try {
             when(daoOwnShip.findAll()).thenReturn(ownershipCats);
@@ -206,7 +206,7 @@ class ShelterServiceTest {
         } catch (dao.tools.DAOException e) {
             e.printStackTrace();
         }
-        List<FriendshipCats> friendshipCats = new ArrayList<>();
+        List<FriendshipCat> friendshipCats = new ArrayList<>();
         friendshipCats.add(cat1AndCat2);
         try {
             when(daoFriendShip.findAll()).thenReturn(friendshipCats);

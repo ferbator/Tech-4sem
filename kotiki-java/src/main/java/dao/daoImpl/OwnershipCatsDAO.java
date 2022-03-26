@@ -1,7 +1,7 @@
 package dao.daoImpl;
 
 import dao.daoInterface.DAO;
-import dao.entities.OwnershipCats;
+import dao.entities.OwnershipCat;
 import dao.tools.DAOException;
 import dao.tools.HibernateUtil;
 import org.hibernate.HibernateException;
@@ -9,14 +9,14 @@ import org.hibernate.Session;
 
 import java.util.List;
 
-public class OwnershipCatsDAO implements DAO<OwnershipCats> {
+public class OwnershipCatsDAO implements DAO<OwnershipCat> {
     @Override
-    public List<OwnershipCats> findAll() throws DAOException {
+    public List<OwnershipCat> findAll() throws DAOException {
         try {
-            List<OwnershipCats> objects;
+            List<OwnershipCat> objects;
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.getTransaction().begin();
-            objects = session.createQuery("select e from OwnershipCats e order by e.id", OwnershipCats.class)
+            objects = session.createQuery("select e from OwnershipCat e order by e.id", OwnershipCat.class)
                     .getResultList();
             session.getTransaction().commit();
             session.close();
@@ -28,7 +28,7 @@ public class OwnershipCatsDAO implements DAO<OwnershipCats> {
     }
 
     @Override
-    public boolean refract(OwnershipCats object) throws DAOException {
+    public boolean refract(OwnershipCat object) throws DAOException {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.getTransaction().begin();
         session.update(object);
@@ -38,7 +38,7 @@ public class OwnershipCatsDAO implements DAO<OwnershipCats> {
     }
 
     @Override
-    public boolean add(OwnershipCats object) throws DAOException {
+    public boolean add(OwnershipCat object) throws DAOException {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.getTransaction().begin();
@@ -53,7 +53,7 @@ public class OwnershipCatsDAO implements DAO<OwnershipCats> {
     }
 
     @Override
-    public boolean del(OwnershipCats object) throws DAOException {
+    public boolean del(OwnershipCat object) throws DAOException {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.getTransaction().begin();
@@ -68,10 +68,10 @@ public class OwnershipCatsDAO implements DAO<OwnershipCats> {
     }
 
     @Override
-    public OwnershipCats getById(long id) throws DAOException {
+    public OwnershipCat getById(long id) throws DAOException {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
-            OwnershipCats item = session.byId(OwnershipCats.class).load(id);
+            OwnershipCat item = session.byId(OwnershipCat.class).load(id);
             session.close();
 
             return item;
