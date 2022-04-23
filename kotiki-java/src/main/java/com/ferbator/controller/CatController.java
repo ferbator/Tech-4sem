@@ -35,7 +35,7 @@ public class CatController {
         return service.addCat(catDTO);
     }
 
-    @DeleteMapping("/del-cat/{id}")
+    @DeleteMapping("/delete-cat/{id}")
     public boolean delCatById(@PathVariable("id") Long id) {
         return service.delCat(id);
     }

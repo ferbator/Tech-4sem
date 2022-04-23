@@ -18,7 +18,7 @@ public class OwnerController {
         return service.addOwner(ownerDTO);
     }
 
-    @DeleteMapping("/del-owner/{id}")
+    @DeleteMapping("/delete-owner/{id}")
     public boolean delOwnerById(@PathVariable("id") Long id) {
         return service.delOwner(id);
     }
