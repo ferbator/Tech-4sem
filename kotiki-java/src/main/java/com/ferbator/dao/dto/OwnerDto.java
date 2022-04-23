@@ -5,18 +5,18 @@ import com.ferbator.dao.entities.Owner;
 import java.sql.Timestamp;
 import java.util.Objects;
 
-public class OwnerDTO {
+public class OwnerDto {
     private Long id;
     private String name;
     private Timestamp birthday;
 
-    public OwnerDTO(Owner own) {
+    public OwnerDto(Owner own) {
         this.id = own.getId();
         this.name = own.getName();
         this.birthday = own.getBirthday();
     }
 
-    public OwnerDTO() {
+    public OwnerDto() {
     }
 
     public Long getId() {
@@ -47,7 +47,7 @@ public class OwnerDTO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OwnerDTO ownerDTO = (OwnerDTO) o;
+        OwnerDto ownerDTO = (OwnerDto) o;
         return Objects.equals(id, ownerDTO.id)
                 && Objects.equals(name, ownerDTO.name)
                 && Objects.equals(birthday, ownerDTO.birthday);

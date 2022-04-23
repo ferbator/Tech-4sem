@@ -1,6 +1,6 @@
 package com.ferbator.dao.entities;
 
-import com.ferbator.dao.dto.OwnershipCatDTO;
+import com.ferbator.dao.dto.OwnershipCatDto;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -19,7 +19,7 @@ public class OwnershipCat {
     @Column(name = "cat_id", nullable = false)
     private Long catId;
 
-    public OwnershipCat(OwnershipCatDTO ownershipCat) {
+    public OwnershipCat(OwnershipCatDto ownershipCat) {
         this.ownerId = ownershipCat.getOwnerId();
         this.catId = ownershipCat.getCatId();
     }

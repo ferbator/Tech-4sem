@@ -1,12 +1,12 @@
 package com.ferbator.services;
 
-import com.ferbator.dao.daoImpl.CatDAO;
-import com.ferbator.dao.daoImpl.FriendshipCatDAO;
-import com.ferbator.dao.daoImpl.OwnerDAO;
-import com.ferbator.dao.daoImpl.OwnershipCatDAO;
-import com.ferbator.dao.dto.OwnerDTO;
+import com.ferbator.dao.daoImpl.CatRepository;
+import com.ferbator.dao.daoImpl.FriendshipCatRepository;
+import com.ferbator.dao.daoImpl.OwnerRepository;
+import com.ferbator.dao.daoImpl.OwnershipCatRepository;
+import com.ferbator.dao.dto.OwnerDto;
 import com.ferbator.dao.entities.Cat;
-import com.ferbator.dao.dto.CatDTO;
+import com.ferbator.dao.dto.CatDto;
 import com.ferbator.dao.entities.Owner;
 import com.ferbator.dao.enums.Colors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,48 +17,52 @@ import java.util.List;
 
 @Service
 public class ShelterService {
-    @Autowired
-    CatDAO catDAO;
-    @Autowired
-    OwnerDAO ownerDAO;
-    @Autowired
-    FriendshipCatDAO friendshipCatDAO;
-    @Autowired
-    OwnershipCatDAO ownershipCatDAO;
+    CatRepository catRepository;
+    OwnerRepository ownerRepository;
+    FriendshipCatRepository friendshipCatRepository;
+    OwnershipCatRepository ownershipCatRepository;
 
-    public List<CatDTO> getListAllCats() {
-        return catDAO.findAll().stream().map(CatDTO::new).toList();
+    @Autowired
+    public ShelterService(CatRepository catRepository, OwnerRepository ownerRepository, FriendshipCatRepository friendshipCatRepository, OwnershipCatRepository ownershipCatRepository) {
+        this.catRepository = catRepository;
+        this.ownerRepository = ownerRepository;
+        this.friendshipCatRepository = friendshipCatRepository;
+        this.ownershipCatRepository = ownershipCatRepository;
     }
 
-    public List<OwnerDTO> getListAllOwners() {
-        return ownerDAO.findAll().stream().map(OwnerDTO::new).toList();
+    public List<CatDto> getListAllCats() {
+        return catRepository.findAll().stream().map(CatDto::new).toList();
     }
 
-    public List<CatDTO> getListAllOneColorCats(Colors colors) {
-        return catDAO.findAllByColor(colors).stream().map(CatDTO::new).toList();
+    public List<OwnerDto> getListAllOwners() {
+        return ownerRepository.findAll().stream().map(OwnerDto::new).toList();
     }
 
-    public boolean addCat(CatDTO cat) {
-        catDAO.save(new Cat(cat));
+    public List<CatDto> getListAllOneColorCats(Colors colors) {
+        return catRepository.findAllByColor(colors).stream().map(CatDto::new).toList();
+    }
+
+    public boolean addCat(CatDto cat) {
+        catRepository.save(new Cat(cat));
         return true;
     }
 
     public boolean delCat(Long id) {
-        ownershipCatDAO.deleteAllByCatId(id);
-        friendshipCatDAO.deleteAllByFirstCatIdOrSecondCatId(id, id);
-        catDAO.deleteById(id);
+        ownershipCatRepository.deleteAllByCatId(id);
+        friendshipCatRepository.deleteAllByFirstCatIdOrSecondCatId(id, id);
+        catRepository.deleteById(id);
         return true;
     }
 
-    public boolean addOwner(OwnerDTO owner) {
-        ownerDAO.save(new Owner(owner));
+    public boolean addOwner(OwnerDto owner) {
+        ownerRepository.save(new Owner(owner));
         return true;
     }
 
     @Transactional
     public boolean delOwner(Long id) {
-        ownershipCatDAO.deleteAllByOwnerId(id);
-        ownerDAO.deleteById(id);
+        ownershipCatRepository.deleteAllByOwnerId(id);
+        ownerRepository.deleteById(id);
         return true;
     }
 }

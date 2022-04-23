@@ -1,7 +1,7 @@
 package com.ferbator.dao.entities;
 
 import com.ferbator.dao.enums.Colors;
-import com.ferbator.dao.dto.CatDTO;
+import com.ferbator.dao.dto.CatDto;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -28,7 +28,7 @@ public class Cat {
     @Enumerated(EnumType.STRING)
     private Colors color;
 
-    public Cat(CatDTO cat) {
+    public Cat(CatDto cat) {
         this.name = cat.getName();
         this.color = cat.getColor();
         this.breed = cat.getBreed();

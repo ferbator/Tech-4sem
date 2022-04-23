@@ -1,13 +1,5 @@
 package com.ferbator.controller;
 
-import com.ferbator.dao.daoImpl.CatDAO;
-import com.ferbator.dao.daoImpl.FriendshipCatDAO;
-import com.ferbator.dao.daoImpl.OwnerDAO;
-import com.ferbator.dao.daoImpl.OwnershipCatDAO;
-import com.ferbator.dao.entities.Cat;
-import com.ferbator.dao.entities.FriendshipCat;
-import com.ferbator.dao.entities.Owner;
-import com.ferbator.dao.entities.OwnershipCat;
 import com.ferbator.services.ShelterService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,30 +12,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(CatController.class)
 public class CatControllerTest {
-    @MockBean
-    CatDAO catDAO;
-
-    @MockBean
-    OwnerDAO ownerDAO;
-
-    @MockBean
-    FriendshipCatDAO friendshipCatDAO;
-
-    @MockBean
-    OwnershipCatDAO ownershipCatDAO;
-
-    @MockBean
-    Cat cat;
-
-    @MockBean
-    Owner owner;
-
-    @MockBean
-    FriendshipCat friendshipCat;
-
-    @MockBean
-    OwnershipCat ownershipCat;
-
     @MockBean
     ShelterService service;
 

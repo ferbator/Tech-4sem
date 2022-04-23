@@ -6,13 +6,22 @@ import com.ferbator.dao.enums.Colors;
 import java.sql.Timestamp;
 import java.util.Objects;
 
-public class CatDTO {
+public class CatDto {
     private Long id;
     private Colors color;
     private String name;
     private String breed;
+    private Timestamp birthday;
 
-    public CatDTO() {
+    public CatDto() {
+    }
+
+    public CatDto(Cat cat) {
+        this.id = cat.getId();
+        this.name = cat.getName();
+        this.color = cat.getColor();
+        this.breed = cat.getBreed();
+        this.birthday = cat.getBirthday();
     }
 
     public Long getId() {
@@ -55,21 +64,11 @@ public class CatDTO {
         this.birthday = birthday;
     }
 
-    private Timestamp birthday;
-
-    public CatDTO(Cat cat) {
-        this.id = cat.getId();
-        this.name = cat.getName();
-        this.color = cat.getColor();
-        this.breed = cat.getBreed();
-        this.birthday = cat.getBirthday();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CatDTO catDTO = (CatDTO) o;
+        CatDto catDTO = (CatDto) o;
         return Objects.equals(id, catDTO.id)
                 && color == catDTO.color
                 && Objects.equals(name, catDTO.name)

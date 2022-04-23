@@ -1,6 +1,6 @@
 package com.ferbator.controller;
 
-import com.ferbator.dao.dto.OwnerDTO;
+import com.ferbator.dao.dto.OwnerDto;
 import com.ferbator.services.ShelterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,18 +13,18 @@ public class OwnerController {
     @Autowired
     ShelterService service;
 
-    @PostMapping("/addOwner")
-    public boolean addOwner(@RequestBody OwnerDTO ownerDTO) {
+    @PostMapping("/add-owner")
+    public boolean addOwner(@RequestBody OwnerDto ownerDTO) {
         return service.addOwner(ownerDTO);
     }
 
-    @DeleteMapping("/delOwner/{id}")
+    @DeleteMapping("/del-owner/{id}")
     public boolean delOwnerById(@PathVariable("id") Long id) {
         return service.delOwner(id);
     }
 
-    @GetMapping("/findAllOwner")
-    public List<OwnerDTO> findAllOwners() {
+    @GetMapping("/find-all-owner")
+    public List<OwnerDto> findAllOwners() {
         return service.getListAllOwners();
     }
 }

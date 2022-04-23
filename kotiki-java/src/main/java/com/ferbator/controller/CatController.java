@@ -1,6 +1,6 @@
 package com.ferbator.controller;
 
-import com.ferbator.dao.dto.CatDTO;
+import com.ferbator.dao.dto.CatDto;
 import com.ferbator.dao.enums.Colors;
 import com.ferbator.services.ShelterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +16,13 @@ public class CatController {
     @Autowired
     ShelterService service;
 
-    @GetMapping("/findAllCats")
-    public List<CatDTO> findAllCats() {
+    @GetMapping("/find-all-cats")
+    public List<CatDto> findAllCats() {
         return service.getListAllCats();
     }
 
-    @GetMapping("/findAllOneColorCats/{color}")
-    public List<CatDTO> findAllOneColorCats(@PathVariable("color") String color) {
+    @GetMapping("/find-all-one-color-cats/{color}")
+    public List<CatDto> findAllOneColorCats(@PathVariable("color") String color) {
         try {
             return service.getListAllOneColorCats(Colors.valueOf(color));
         } catch (IllegalArgumentException e) {
@@ -30,12 +30,12 @@ public class CatController {
         }
     }
 
-    @PostMapping("/addCat")
-    public boolean addCat(@RequestBody CatDTO catDTO) {
+    @PostMapping("/add-cat")
+    public boolean addCat(@RequestBody CatDto catDTO) {
         return service.addCat(catDTO);
     }
 
-    @DeleteMapping("/delCat/{id}")
+    @DeleteMapping("/del-cat/{id}")
     public boolean delCatById(@PathVariable("id") Long id) {
         return service.delCat(id);
     }

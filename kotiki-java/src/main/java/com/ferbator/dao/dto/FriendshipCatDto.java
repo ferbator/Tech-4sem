@@ -4,18 +4,18 @@ import com.ferbator.dao.entities.FriendshipCat;
 
 import java.util.Objects;
 
-public class FriendshipCatDTO {
+public class FriendshipCatDto {
     private Long id;
     private Long firstCatId;
     private Long secondCatId;
 
-    public FriendshipCatDTO(FriendshipCat friendshipCat) {
+    public FriendshipCatDto() {
+    }
+
+    public FriendshipCatDto(FriendshipCat friendshipCat) {
         this.id = friendshipCat.getId();
         this.firstCatId = friendshipCat.getFirstCatId();
         this.secondCatId = friendshipCat.getSecondCatId();
-    }
-
-    public FriendshipCatDTO() {
     }
 
     public Long getId() {
@@ -46,7 +46,7 @@ public class FriendshipCatDTO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FriendshipCatDTO that = (FriendshipCatDTO) o;
+        FriendshipCatDto that = (FriendshipCatDto) o;
         return Objects.equals(id, that.id)
                 && Objects.equals(firstCatId, that.firstCatId)
                 && Objects.equals(secondCatId, that.secondCatId);

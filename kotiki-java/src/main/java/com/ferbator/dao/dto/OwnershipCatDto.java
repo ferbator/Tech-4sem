@@ -4,17 +4,17 @@ import com.ferbator.dao.entities.OwnershipCat;
 
 import java.util.Objects;
 
-public class OwnershipCatDTO {
+public class OwnershipCatDto {
     private Long id;
     private Long ownerId;
     private Long catId;
 
-    public OwnershipCatDTO(OwnershipCat ownershipCat) {
-        this.ownerId = ownershipCat.getOwnerId();
-        this.catId = ownershipCat.getCatId();
+    public OwnershipCatDto() {
     }
 
-    public OwnershipCatDTO() {
+    public OwnershipCatDto(OwnershipCat ownershipCat) {
+        this.ownerId = ownershipCat.getOwnerId();
+        this.catId = ownershipCat.getCatId();
     }
 
     public Long getId() {
@@ -45,7 +45,7 @@ public class OwnershipCatDTO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OwnershipCatDTO that = (OwnershipCatDTO) o;
+        OwnershipCatDto that = (OwnershipCatDto) o;
         return Objects.equals(id, that.id)
                 && Objects.equals(ownerId, that.ownerId)
                 && Objects.equals(catId, that.catId);

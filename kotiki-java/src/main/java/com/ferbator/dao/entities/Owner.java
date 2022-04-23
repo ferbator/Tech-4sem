@@ -1,6 +1,6 @@
 package com.ferbator.dao.entities;
 
-import com.ferbator.dao.dto.OwnerDTO;
+import com.ferbator.dao.dto.OwnerDto;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -20,7 +20,7 @@ public class Owner {
     @Column(name = "birthday")
     private Timestamp birthday;
 
-    public Owner(OwnerDTO own) {
+    public Owner(OwnerDto own) {
         this.name = own.getName();
         this.birthday = own.getBirthday();
     }

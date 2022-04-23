@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CatDAO extends JpaRepository<Cat, Long> {
+public interface CatRepository extends JpaRepository<Cat, Long> {
     List<Cat> findAllByColor(Colors color);
 }

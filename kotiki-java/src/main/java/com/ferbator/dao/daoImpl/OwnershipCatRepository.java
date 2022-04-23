@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface OwnershipCatDAO extends JpaRepository<OwnershipCat, Long> {
+public interface OwnershipCatRepository extends JpaRepository<OwnershipCat, Long> {
     void deleteAllByCatId(Long catId);
     void deleteAllByOwnerId(Long ownerId);
 }
