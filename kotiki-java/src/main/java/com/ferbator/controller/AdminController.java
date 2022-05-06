@@ -1,45 +1,38 @@
 package com.ferbator.controller;
 
-import com.ferbator.dao.dto.CatDto;
 import com.ferbator.dao.dto.FriendshipCatDto;
+import com.ferbator.dao.dto.OwnerDto;
 import com.ferbator.dao.dto.OwnershipCatDto;
-import com.ferbator.dao.enums.Colors;
 import com.ferbator.services.ShelterService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/owner")
-public class OwnerController {
+@RequestMapping("/admin")
+public class AdminController {
     @Autowired
     ShelterService service;
 
-    @GetMapping("/find-all-cats")
-    public List<CatDto> findAllCats() {
-        return service.getListAllCats();
+    @GetMapping("")
+    public String adminPage() {
+        return "Shelter service for admin";
     }
 
-    @GetMapping("/find-all-one-color-cats/{color}")
-    public List<CatDto> findAllOneColorCats(@PathVariable("color") String color) {
-        try {
-            return service.getListAllOneColorCats(Colors.valueOf(color));
-        } catch (IllegalArgumentException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
+    @PostMapping("/add-owner")
+    public boolean addOwner(@RequestBody OwnerDto ownerDTO) {
+        return service.addOwner(ownerDTO);
     }
 
-    @PostMapping("/add-cat")
-    public boolean addCat(@RequestBody CatDto catDTO) {
-        return service.addCat(catDTO);
+    @DeleteMapping("/delete-owner/{id}")
+    public boolean delOwnerById(@PathVariable("id") Long id) {
+        return service.delOwner(id);
     }
 
-    @DeleteMapping("/delete-cat/{id}")
-    public boolean delCatById(@PathVariable("id") Long id) {
-        return service.delCat(id);
+    @GetMapping("/find-all-owner")
+    public List<OwnerDto> findAllOwners() {
+        return service.getListAllOwners();
     }
 
     @DeleteMapping("/break-ownership")
