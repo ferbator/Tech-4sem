@@ -26,7 +26,7 @@ public class WebSecurityService implements UserDetailsService {
         return roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
-    public User mapUserBDtoUserDetails(OwnerDto owner){
+    public User mapOwnerDtoToUserDetails(OwnerDto owner){
         return new User(owner.getLogin(), owner.getPassword(), mapRolesToAuthorities(List.of(owner.getRole())));
     }
 
@@ -37,6 +37,6 @@ public class WebSecurityService implements UserDetailsService {
         if(owner == null){
             throw new UsernameNotFoundException("Owner doesn't exist");
         }
-        return mapUserBDtoUserDetails(owner);
+        return mapOwnerDtoToUserDetails(owner);
     }
 }
