@@ -1,5 +1,7 @@
 package com.ferbator.dao.entities;
 
+import com.ferbator.dao.dto.FriendshipCatDto;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -17,9 +19,9 @@ public class FriendshipCat {
     @Column(name = "second_cat_id", nullable = false)
     private Long secondCatId;
 
-    public FriendshipCat(FriendshipCat friendshipCatDTO) {
-        this.firstCatId = friendshipCatDTO.getFirstCatId();
-        this.secondCatId = friendshipCatDTO.getSecondCatId();
+    public FriendshipCat(FriendshipCatDto friendshipCat) {
+        this.firstCatId = friendshipCat.getFirstCatId();
+        this.secondCatId = friendshipCat.getSecondCatId();
     }
 
     public FriendshipCat() {

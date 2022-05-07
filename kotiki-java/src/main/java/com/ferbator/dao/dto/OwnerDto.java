@@ -2,6 +2,8 @@ package com.ferbator.dao.dto;
 
 import com.ferbator.dao.entities.Owner;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import java.sql.Timestamp;
 import java.util.Objects;
 
@@ -9,11 +11,17 @@ public class OwnerDto {
     private Long id;
     private String name;
     private Timestamp birthday;
+    private String login;
+    private String password;
+    private String role;
 
     public OwnerDto(Owner own) {
         this.id = own.getId();
         this.name = own.getName();
         this.birthday = own.getBirthday();
+        this.login = own.getLogin();
+        this.password = own.getPassword();
+        this.role = own.getRole();
     }
 
     public OwnerDto() {
@@ -31,8 +39,32 @@ public class OwnerDto {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String login) {
+        this.login = login;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String name) {
         this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public Timestamp getBirthday() {
@@ -47,14 +79,12 @@ public class OwnerDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OwnerDto ownerDTO = (OwnerDto) o;
-        return Objects.equals(id, ownerDTO.id)
-                && Objects.equals(name, ownerDTO.name)
-                && Objects.equals(birthday, ownerDTO.birthday);
+        OwnerDto ownerDto = (OwnerDto) o;
+        return Objects.equals(id, ownerDto.id) && Objects.equals(name, ownerDto.name) && Objects.equals(birthday, ownerDto.birthday) && Objects.equals(login, ownerDto.login) && Objects.equals(password, ownerDto.password) && Objects.equals(role, ownerDto.role);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, birthday);
+        return Objects.hash(id, name, birthday, login, password, role);
     }
 }
