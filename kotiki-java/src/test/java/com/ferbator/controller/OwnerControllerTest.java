@@ -12,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -57,9 +56,14 @@ public class OwnerControllerTest {
     public void setUp() {
         owner = new Owner();
         owner.setLogin("Denis");
-        owner.setPassword("$2a$12$wbW9PCcAY8icWtsvMlqpceMsK2ceTsNi2rusS7lQFp1bLVtayGNAq");
+        owner.setPassword("$2a$12$QslpGcxXWuH3TS9dUirDB.NtB6IFiqbvq89zJfRCdWILHsuQF9Uz6");
         owner.setRole("ROLE_USER");
         ownerDto = new OwnerDto(owner);
+
+        List<SimpleGrantedAuthority> tmpList = Stream.of(ownerDto.getRole()).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+
+        Mockito.when(webSecurityService.mapOwnerDtoToUserDetails(ownerDto)).thenReturn(new User(ownerDto.getLogin(), ownerDto.getPassword(), tmpList));
+
         Mockito.when(webSecurityService.loadUserByUsername("Denis")).thenReturn(webSecurityService.mapOwnerDtoToUserDetails(ownerDto));
         Mockito.when(service.findOwnerByLogin("Denis")).thenReturn(ownerDto);
         Mockito.when(ownerRepository.findByLogin("Denis")).thenReturn(owner);
@@ -68,8 +72,7 @@ public class OwnerControllerTest {
     @Test
     public void shouldAllowPageWhenUserIsAdmin() throws Exception {
         String url = "http://localhost:8080/admin";
-        this.mockMvc
-                .perform(MockMvcRequestBuilders
+        mockMvc.perform(MockMvcRequestBuilders
                         .get(url)
                         .with(SecurityMockMvcRequestPostProcessors.user("Denis")
                                 .password("0000")
