@@ -14,19 +14,19 @@ public class Owner {
     @Column(name = "id", nullable = false)
     private Long id;
     @Basic
-    @Column(name = "name", length = -1)
+    @Column(name = "name")
     private String name;
     @Basic
     @Column(name = "birthday")
     private Timestamp birthday;
     @Basic
-    @Column(name = "login", length = -1)
+    @Column(name = "login")
     private String login;
     @Basic
-    @Column(name = "password", length = -1)
+    @Column(name = "password")
     private String password;
     @Basic
-    @Column(name = "role", length = -1)
+    @Column(name = "role")
     private String role;
 
     public Owner(OwnerDto own) {

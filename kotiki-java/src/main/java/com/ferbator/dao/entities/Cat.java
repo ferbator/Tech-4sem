@@ -11,20 +11,20 @@ import java.util.Objects;
 @Table(name = "cats")
 public class Cat {
     @Basic
-    @Column(name = "name", length = -1)
+    @Column(name = "name")
     private String name;
     @Basic
     @Column(name = "birthday")
     private Timestamp birthday;
     @Basic
-    @Column(name = "breed", length = -1)
+    @Column(name = "breed")
     private String breed;
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id", nullable = false)
     private Long id;
     @Basic
-    @Column(name = "color", length = -1)
+    @Column(name = "color")
     @Enumerated(EnumType.STRING)
     private Colors color;
 
