@@ -5,12 +5,14 @@ import com.ferbator.shelterapi.dao.dto.OwnerDto;
 import com.ferbator.shelterapi.dao.dto.OwnershipCatDto;
 import com.ferbator.shelterapi.services.ShelterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("api/admin")
+@Secured("ROLE_ADMIN")
 public class AdminController {
     @Autowired
     ShelterService service;
