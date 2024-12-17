@@ -78,4 +78,4 @@ jobs:
         context: .
         push: true
         tags: ${{ steps.docker_meta.outputs.tags }}
-        working-directory: shelter-api
+        build-root-directory: shelter-api
