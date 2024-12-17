@@ -7,47 +7,53 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * Конфигурация безопасности приложения.
+ * Использует WebSecurityConfigurerAdapter (доступно в Spring Boot 2.6.x).
+ */
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final WebSecurityService service;
+
     @Autowired
-    WebSecurityService service;
+    public WebSecurityConfig(WebSecurityService service) {
+        this.service = service;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf()
-                .disable()
+                // Отключаем CSRF для упрощения работы с REST
+                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/registration").not().fullyAuthenticated()
-                .antMatchers(HttpMethod.POST, "/api/**").hasRole(Role.ADMIN.name())
-                .antMatchers(HttpMethod.DELETE, "/api/**").hasRole(Role.ADMIN.name())
-                .antMatchers("/", "/swagger-ui/**").permitAll()
+                // Разрешаем доступ к странице регистрации без авторизации
+                .antMatchers("/registration").permitAll()
+                //.antMatchers( "/api/owner/**").hasRole(Role.USER.name())
+                //.antMatchers("/api/**").hasRole(Role.ADMIN.name())
+                // Доступ к корню, к Swagger UI и документации OpenAPI для всех
+                .antMatchers("/", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                // Остальные запросы требуют аутентификации
                 .anyRequest().authenticated()
                 .and()
-                .formLogin(form ->
-                {
-                    try {
-                        form
-                                .loginPage("/login")
-                                .defaultSuccessUrl("/")
-                                .permitAll()
-                                .and()
-                                .logout()
-                                .logoutSuccessUrl("/")
-                                .permitAll();
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-
+                // Настройка формы логина
+                .formLogin()
+                .defaultSuccessUrl("/", true)
+                .permitAll()
+                .and()
+                // Настройка логаута
+                .logout()
+                .logoutSuccessUrl("/")
+                .permitAll();
     }
 
     @Bean
@@ -58,7 +64,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return authenticationProvider;
     }
 
-    private PasswordEncoder passwordEncoder() {
+    @Bean
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }

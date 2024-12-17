@@ -19,23 +19,51 @@ import java.util.stream.Collectors;
 @Service("webSecurityService")
 public class WebSecurityService implements UserDetailsService {
 
-    @Autowired
-    private ShelterService service;
+    private final ShelterService shelterService;
 
-    public Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<String> roles){
-        return roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+    public WebSecurityService(ShelterService shelterService) {
+        this.shelterService = shelterService;
     }
 
-    public User mapOwnerDtoToUserDetails(OwnerDto owner){
-        return new User(owner.getLogin(), owner.getPassword(), mapRolesToAuthorities(List.of(owner.getRole())));
+    /**
+     * Преобразует список ролей в список GrantedAuthority.
+     *
+     * @param roles коллекция ролей
+     * @return коллекция GrantedAuthority
+     */
+    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<String> roles) {
+        return roles.stream()
+                .map(SimpleGrantedAuthority::new)
+                .toList();
     }
 
+    /**
+     * Преобразует объект OwnerDto в UserDetails для Spring Security.
+     *
+     * @param owner DTO, содержащий логин, пароль и роль
+     * @return объект User, реализующий UserDetails
+     */
+    public UserDetails mapOwnerDtoToUserDetails(OwnerDto owner) {
+        return User.withUsername(owner.getLogin())
+                .password(owner.getPassword())
+                .authorities(mapRolesToAuthorities(List.of(owner.getRole())))
+                .build();
+    }
+
+    /**
+     * Загружает пользователя по логину и возвращает объект UserDetails.
+     * Если пользователь не найден, выбрасывает исключение UsernameNotFoundException.
+     *
+     * @param login Логин пользователя
+     * @return UserDetails для переданного логина
+     * @throws UsernameNotFoundException если пользователь не найден
+     */
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        OwnerDto owner = service.findOwnerByLogin(login);
-        if(owner == null){
-            throw new UsernameNotFoundException("Owner doesn't exist");
+        OwnerDto owner = shelterService.findOwnerByLogin(login);
+        if (owner == null) {
+            throw new UsernameNotFoundException("Owner with login '" + login + "' doesn't exist");
         }
         return mapOwnerDtoToUserDetails(owner);
     }
