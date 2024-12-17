@@ -26,9 +26,11 @@ jobs:
 
       - name: Build with Gradle Wrapper
         run: ./gradlew build --no-daemon
+        working-directory: shelter-api
 
       - name: Run tests
         run: ./gradlew test --no-daemon
+        working-directory: shelter-api
 
   dependency-submission:
     runs-on: ubuntu-latest
