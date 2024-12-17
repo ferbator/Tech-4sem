@@ -25,6 +25,7 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
+        working-directory: shelter-api
 
       - name: Build with Gradle Wrapper
         run: ./gradlew build --no-daemon
