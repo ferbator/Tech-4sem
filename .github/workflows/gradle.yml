@@ -1,10 +1,12 @@
 name: CI-CD Pipeline
 
 on:
+  release:
+    types: [created]
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
 jobs:
   build-and-test:
