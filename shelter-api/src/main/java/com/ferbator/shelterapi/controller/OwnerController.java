@@ -5,60 +5,103 @@ import com.ferbator.shelterapi.dao.dto.FriendshipCatDto;
 import com.ferbator.shelterapi.dao.dto.OwnershipCatDto;
 import com.ferbator.shelterapi.dao.enums.Colors;
 import com.ferbator.shelterapi.services.ShelterService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+/**
+ * Контроллер для владельцев:
+ * просмотр котов, добавление и удаление котов,
+ * управление дружбой и владением котами (в рамках своих полномочий).
+ */
 @RestController
-@RequestMapping("api/owner")
+@RequestMapping("/api/owner")
+@Secured("ROLE_USER")
 public class OwnerController {
-    @Autowired
-    ShelterService service;
 
-    @GetMapping("/find-all-cats")
-    public List<CatDto> findAllCats() {
-        return service.getListAllCats();
+    private final ShelterService service;
+
+    public OwnerController(ShelterService service) {
+        this.service = service;
     }
 
-    @GetMapping("/find-all-one-color-cats/{color}")
-    public List<CatDto> findAllOneColorCats(@PathVariable("color") String color) {
+    /**
+     * Получить список всех котов.
+     */
+    @GetMapping("/cats")
+    public ResponseEntity<List<CatDto>> findAllCats() {
+        return ResponseEntity.ok(service.getListAllCats());
+    }
+
+    /**
+     * Получить список котов определённого цвета.
+     */
+    @GetMapping("/cats/color/{color}")
+    public ResponseEntity<List<CatDto>> findAllOneColorCats(@PathVariable("color") String color) {
         try {
-            return service.getListAllOneColorCats(Colors.valueOf(color));
+            Colors c = Colors.valueOf(color.toUpperCase());
+            return ResponseEntity.ok(service.getListAllOneColorCats(c));
         } catch (IllegalArgumentException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid color");
         }
     }
 
-    @PostMapping("/add-cat")
-    public boolean addCat(@RequestBody CatDto catDTO) {
-        return service.addCat(catDTO);
+    /**
+     * Добавить кота.
+     */
+    @PostMapping("/cats")
+    public ResponseEntity<Void> addCat(@RequestBody CatDto catDTO) {
+        service.addCat(catDTO);
+        return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/delete-cat/{id}")
-    public boolean delCatById(@PathVariable("id") Long id) {
-        return service.delCat(id);
+    /**
+     * Удалить кота по ID.
+     */
+    @DeleteMapping("/cats/{id}")
+    public ResponseEntity<Void> delCatById(@PathVariable("id") Long id) {
+        service.delCat(id);
+        return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/break-ownership")
-    public boolean breakOwnershipCat(@RequestBody OwnershipCatDto ownershipCat) {
-        return service.breakOwnershipCat(ownershipCat.getOwnerId(), ownershipCat.getCatId());
+    /**
+     * Разорвать связь владения котом.
+     * Здесь логика может предполагать, что владелец разрывает связь только со своими котами.
+     */
+    @DeleteMapping("/ownership")
+    public ResponseEntity<Void> breakOwnershipCat(@RequestBody OwnershipCatDto ownershipCat) {
+        service.breakOwnershipCat(ownershipCat.getOwnerId(), ownershipCat.getCatId());
+        return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/make-ownership")
-    public boolean makeOwnershipCat(@RequestBody OwnershipCatDto ownershipCat) {
-        return service.makeOwnershipCat(ownershipCat);
+    /**
+     * Установить связь владения котом.
+     */
+    @PostMapping("/ownership")
+    public ResponseEntity<Void> makeOwnershipCat(@RequestBody OwnershipCatDto ownershipCat) {
+        service.makeOwnershipCat(ownershipCat);
+        return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/break-friendship")
-    public boolean breakFriendship(@RequestBody FriendshipCatDto friendshipCat) {
-        return service.breakFriendshipCat(friendshipCat.getFirstCatId(), friendshipCat.getSecondCatId());
+    /**
+     * Разорвать дружбу между котами.
+     */
+    @DeleteMapping("/friendship")
+    public ResponseEntity<Void> breakFriendship(@RequestBody FriendshipCatDto friendshipCat) {
+        service.breakFriendshipCat(friendshipCat.getFirstCatId(), friendshipCat.getSecondCatId());
+        return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/make-friendship")
-    public boolean makeFriendship(@RequestBody FriendshipCatDto friendshipCat) {
-        return service.makeFriendshipCat(friendshipCat);
+    /**
+     * Установить дружбу между котами.
+     */
+    @PostMapping("/friendship")
+    public ResponseEntity<Void> makeFriendship(@RequestBody FriendshipCatDto friendshipCat) {
+        service.makeFriendshipCat(friendshipCat);
+        return ResponseEntity.ok().build();
     }
 }
